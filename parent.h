@@ -43,5 +43,6 @@ void deleteAfterParent(ListParent &L, addressParent Prec, addressParent &P);
 void showAllParents(ListParent L);
 addressParent findParent(ListParent L, string flightID);
 int countParents(ListParent L);
+void deleteElementParent(ListParent &LP, string flightID);
 
 #endif // DLL_PARENT_H_INCLUDED

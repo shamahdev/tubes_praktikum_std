@@ -4,6 +4,13 @@
 void createListChild(ListChild &L) {
     First(L) = NULL;
 }
+void deleteAfterChild(ListChild &L, addressChild Prec, addressChild &P) {
+    if (Prec != NULL && Next(Prec) != NULL) {
+        P = Next(Prec);
+        Next(Prec) = Next(P);
+        Next(P) = NULL;
+    }
+}
 
 addressChild createElementChild(infotypeChild dataBaru) {
     addressChild P = new elmListChild;
@@ -11,7 +18,16 @@ addressChild createElementChild(infotypeChild dataBaru) {
     Next(P) = NULL;
     return P;
 }
-
+addressChild findChild(ListChild L, string aircraftID) {
+    addressChild C = First(L);
+    while (C != NULL) {
+        if (Info(C).aircraftID == aircraftID) {
+            return C;
+        }
+        C = Next(C);
+    }
+    return NULL;
+}
 void insertFirstChild(ListChild &L, addressChild P) {
     if (First(L) == NULL) {
         First(L) = P;
@@ -73,13 +89,25 @@ void showAllChildren(ListChild L) {
     }
 }
 
-addressChild findChild(ListChild L, string aircraftID) {
-    addressChild P = First(L);
-    while (P != NULL) {
-        if (Info(P).aircraftID == aircraftID) {
-            return P;
+
+void deleteElementChild(ListChild &LC, string aircraftID) {
+    addressChild C = First(LC), prev = nullptr;
+
+    while (C != nullptr) {
+        if (Info(C).aircraftID == aircraftID) {
+            if (C == First(LC)) {
+                deleteFirstChild(LC, C);
+            } else if (next(C) == nullptr) {
+                deleteLastChild(LC, C);
+            } else {
+                deleteAfterChild(LC, prev, C);
+            }
+            cout << "Aircraft deleted!" << endl;
+            return;
         }
-        P = Next(P);
+        prev = C;
+        C = next(C);
     }
-    return NULL;
+    cout << "Aircraft not found!" << endl;
 }
+

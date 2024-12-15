@@ -20,6 +20,32 @@ void insertRelation(ListRelation &L, addressRelation P) {
         First(L) = P;
     }
 }
+void deleteFirstRelation(ListRelation &L, addressRelation &P) {
+    if (First(L) != NULL) {
+        P = First(L);
+        if (Next(P) == NULL) {
+            First(L) = NULL;
+        } else {
+            First(L) = Next(P);
+            Next(P) = NULL;
+        }
+    }
+}
+void deleteLastRelation(ListRelation &L, addressRelation &P) {
+    if (First(L) != NULL) {
+        if (Next(First(L)) == NULL) {
+            P = First(L);
+            First(L) = NULL;
+        } else {
+            addressRelation Q = First(L);
+            while (Next(Next(Q)) != NULL) {
+                Q = Next(Q);
+            }
+            P = Next(Q);
+            Next(Q) = NULL;
+        }
+    }
+}
 
 void deleteRelation(ListRelation &L, addressRelation &P) {
     if (First(L) != NULL) {
@@ -32,6 +58,13 @@ void deleteRelation(ListRelation &L, addressRelation &P) {
             }
             Next(Q) = Next(P);
         }
+        Next(P) = NULL;
+    }
+}
+void deleteAfterRelation(ListRelation &L, addressRelation Prec, addressRelation &P) {
+    if (Prec != NULL && Next(Prec) != NULL) {
+        P = Next(Prec);
+        Next(Prec) = Next(P);
         Next(P) = NULL;
     }
 }
@@ -90,7 +123,7 @@ int countChildrenOfParent(ListRelation L, string flightID) {
     return count;
 }
 
-void editRelation(ListRelation &L, string oldFlightID, string oldAircraftID, 
+void editRelation(ListRelation &L, string oldFlightID, string oldAircraftID,
                   string newFlightID, string newAircraftID) {
     addressRelation P = findRelation(L, oldFlightID, oldAircraftID);
     if (P != NULL) {
@@ -175,3 +208,25 @@ int countParentsWithoutChild(ListRelation L, ListParent LP) {
     }
     return count;
 }
+
+void deleteElementRelation(ListRelation &LR, string flightID, string aircraftID) {
+    addressRelation R = First(LR), prev = nullptr;
+
+    while (R != nullptr) {
+        if (Info(R).flightID == flightID && Info(R).aircraftID == aircraftID) {
+            if (R == First(LR)) {
+                deleteFirstRelation(LR, R);
+            } else if (next(R) == nullptr) {
+                deleteLastRelation(LR, R);
+            } else {
+                deleteAfterRelation(LR, prev, R);
+            }
+            cout << "Relation deleted!" << endl;
+            return;
+        }
+        prev = R;
+        R = next(R);
+    }
+    cout << "Relation not found!" << endl;
+}
+

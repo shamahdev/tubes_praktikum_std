@@ -44,7 +44,7 @@ int countParentsOfChild(ListRelation L, string aircraftID);
 int countChildrenWihoutParent(ListRelation L, ListChild LC);
 int countParentsWithoutChild(ListRelation L, ListParent LP);
 bool hasRelation(ListRelation L, string flightID, string aircraftID);
-void editRelation(ListRelation &L, string oldFlightID, string oldAircraftID, 
+void editRelation(ListRelation &L, string oldFlightID, string oldAircraftID,
                   string newFlightID, string newAircraftID);
-
+void deleteElementRelation(ListRelation &LR, string flightID, string aircraftID);
 #endif // SLL_RELATION_H_INCLUDED

@@ -5,9 +5,9 @@ using namespace std;
 
 void menu() {
     cout << "========== Flight Management System ==========" << endl;
-    cout << "1.  Add Flight" << endl;
-    cout << "2.  Add Aircraft" << endl;
-    cout << "3.  Create Flight-Aircraft Relation" << endl;
+    cout << "1.  Add a Flight" << endl;
+    cout << "2.  Add an Aircraft" << endl;
+    cout << "3.  Create a Flight-Aircraft Relation" << endl;
     cout << "4.  Show All Flights" << endl;
     cout << "5.  Show All Aircraft" << endl;
     cout << "6.  Show All Relations" << endl;
@@ -20,6 +20,11 @@ void menu() {
     cout << "13. Count Aircraft without Flights" << endl;
     cout << "14. Count Flights without Aircraft" << endl;
     cout << "15. Edit Flight-Aircraft Relation" << endl;
+    cout << "16. Delete a Flight" << endl;
+    cout << "17. Delete an Aircraft" << endl;
+    cout << "18. Delete a Relation" << endl;
+    cout << "19. Find Flight by ID" << endl;
+    cout << "20. Find Aircraft by ID" << endl;
     cout << "0.  Exit" << endl;
     cout << "Choice: ";
 }
@@ -28,17 +33,17 @@ int main() {
     ListParent LP;
     ListChild LC;
     ListRelation LR;
-    
+
     createListParent(LP);
     createListChild(LC);
     createListRelation(LR);
-    
+
     int choice = -1;
     while (choice != 0) {
         menu();
         cin >> choice;
         cout << endl;
-        
+
         switch(choice) {
             case 1: {
                 infotypeParent flight;
@@ -51,7 +56,7 @@ int main() {
                 getline(cin, flight.flightTime);
                 cout << "Enter Available Seats: ";
                 cin >> flight.availableSeats;
-                
+
                 addressParent P = createElementParent(flight);
                 insertFirstParent(LP, P);
                 cout << "Flight added successfully!" << endl;
@@ -68,7 +73,7 @@ int main() {
                 cin >> aircraft.totalSeats;
                 cout << "Enter Max Weight: ";
                 cin >> aircraft.maxWeight;
-                
+
                 addressChild C = createElementChild(aircraft);
                 insertFirstChild(LC, C);
                 cout << "Aircraft added successfully!" << endl;
@@ -83,7 +88,7 @@ int main() {
                 cout << "Enter Flight Status: ";
                 cin.ignore();
                 getline(cin, rel.flightStatus);
-                
+
                 addressRelation R = createElementRelation(rel);
                 insertRelation(LR, R);
                 cout << "Relation created successfully!" << endl;
@@ -148,11 +153,61 @@ int main() {
                 cin >> newFlightID;
                 cout << "Enter New Aircraft ID: ";
                 cin >> newAircraftID;
-                
+
                 editRelation(LR, oldFlightID, oldAircraftID, newFlightID, newAircraftID);
-                cout << "Relation updated successfully!" << endl;
+                cout << "Relation updated!" << endl;
                 break;
             }
+            case 16: {
+                string flightID;
+                cout << "Enter Flight ID to delete: ";
+                cin >> flightID;
+                deleteElementParent(LP, flightID);
+                break;
+            }
+            case 17: {
+                string aircraftID;
+                cout << "Enter Aircraft ID to delete: ";
+                cin >> aircraftID;
+                deleteElementChild(LC, aircraftID);
+                break;
+            }
+            case 18: {
+                string flightID, aircraftID;
+                cout << "Enter Flight ID: ";
+                cin >> flightID;
+                cout << "Enter Aircraft ID: ";
+                cin >> aircraftID;
+                deleteElementRelation(LR, flightID, aircraftID);
+            break;
+            }
+            case 19:{
+                string flightID;
+                cout << "Enter Flight ID to find: ";
+                cin >> flightID;
+
+                addressParent P = findParent(LP, flightID);
+                if (P != NULL) {
+                    cout << "Flight found: " << Info(P).flightID << endl;
+                } else {
+                    cout << "Flight not found!" << endl;
+                }
+                break;
+            }
+            case 20:{
+                string aircraftID;
+                cout << "Enter Aircraft ID to find: ";
+                cin >> aircraftID;
+
+                addressChild C = findChild(LC, aircraftID);
+                if (C != NULL) {
+                    cout << "Aircraft found: " << Info(C).aircraftID << endl;
+                } else {
+                    cout << "Aircraft not found!" << endl;
+                }
+                break;
+            }
+
             case 0:
                 cout << "Thank you for using Telkom Air Flight Management System!" << endl;
                 break;
@@ -161,6 +216,6 @@ int main() {
         }
         cout << endl;
     }
-    
+
     return 0;
 }

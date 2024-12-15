@@ -39,5 +39,5 @@ void deleteAfterChild(ListChild &L, addressChild Prec, addressChild &P);
 void showAllChildren(ListChild L);
 addressChild findChild(ListChild L, string flightID);
 int countChildren(ListChild L);
-
+void deleteElementChild(ListChild &LC, string aircraftID);
 #endif // SLL_CHILD_H_INCLUDED

@@ -86,3 +86,33 @@ addressParent findParent(ListParent L, string flightID) {
     }
     return NULL;
 }
+void deleteAfterParent(ListParent &L, addressParent Prec, addressParent &P) {
+    if (Prec != NULL && Next(Prec) != NULL) {
+        P = Next(Prec);
+        Next(Prec) = Next(P);
+        Next(P) = NULL;
+    }
+}
+
+
+void deleteElementParent(ListParent &LP, string flightID) {
+    addressParent P = First(LP), prev = nullptr;
+
+    while (P != nullptr) {
+        if (Info(P).flightID == flightID) {
+            if (P == First(LP)) {
+                deleteFirstParent(LP, P);
+            } else if (next(P) == nullptr) {
+                deleteLastParent(LP, P);
+            } else {
+                deleteAfterParent(LP, prev, P);
+            }
+            cout << "Flight deleted successfully!" << endl;
+            return;
+        }
+        prev = P;
+        P = next(P);
+    }
+    cout << "Flight not found!" << endl;
+}
+
