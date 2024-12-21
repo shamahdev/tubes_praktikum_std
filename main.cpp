@@ -4,7 +4,7 @@
 using namespace std;
 
 void menu() {
-    cout << "========== Flight Management System ==========" << endl;
+    cout << "========== Telkom Air Flight Management System ==========" << endl;
     cout << "1.  Add a Flight" << endl;
     cout << "2.  Add an Aircraft" << endl;
     cout << "3.  Create a Flight-Aircraft Relation" << endl;
@@ -49,6 +49,12 @@ int main() {
                 infotypeParent flight;
                 cout << "Enter Flight ID: ";
                 cin >> flight.flightID;
+                
+                if (findParent(LP, flight.flightID) != NULL) {
+                    cout << "Flight ID already exists!" << endl;
+                    break;
+                }
+
                 cout << "Enter Flight Route: ";
                 cin.ignore();
                 getline(cin, flight.flightRoute);
@@ -66,12 +72,18 @@ int main() {
                 infotypeChild aircraft;
                 cout << "Enter Aircraft ID: ";
                 cin >> aircraft.aircraftID;
+
+                if (findChild(LC, aircraft.aircraftID) != NULL) {
+                    cout << "Aircraft ID already exists!" << endl;
+                    break;
+                }
+
                 cout << "Enter Aircraft Model: ";
                 cin.ignore();
                 getline(cin, aircraft.aircraftModel);
                 cout << "Enter Total Seats: ";
                 cin >> aircraft.totalSeats;
-                cout << "Enter Max Weight: ";
+                cout << "Enter Max Weight (kg): ";
                 cin >> aircraft.maxWeight;
 
                 addressChild C = createElementChild(aircraft);
@@ -85,6 +97,18 @@ int main() {
                 cin >> rel.flightID;
                 cout << "Enter Aircraft ID: ";
                 cin >> rel.aircraftID;
+                addressParent P = findParent(LP, rel.flightID);
+                addressChild C = findChild(LC, rel.aircraftID);
+
+                if (P == NULL) {
+                    cout << "Flight ID does not exist!" << endl;
+                    break;
+                }
+                if (C == NULL) {
+                    cout << "Aircraft ID does not exist!" << endl;
+                    break;
+                }
+
                 cout << "Enter Flight Status: ";
                 cin.ignore();
                 getline(cin, rel.flightStatus);
@@ -162,14 +186,32 @@ int main() {
                 string flightID;
                 cout << "Enter Flight ID to delete: ";
                 cin >> flightID;
+
+                addressRelation R = firstRelation(LR);
+                while (R != NULL) {
+                    if (Info(R).flightID == flightID) {
+                        deleteElementRelation(LR, Info(R).flightID, Info(R).aircraftID);
+                    }
+                    R = Next(R);
+                }
                 deleteElementParent(LP, flightID);
+                cout << "Flight deleted successfully!" << endl;
                 break;
             }
             case 17: {
                 string aircraftID;
                 cout << "Enter Aircraft ID to delete: ";
                 cin >> aircraftID;
+
+                addressRelation R = firstRelation(LR);
+                while (R != NULL) {
+                    if (Info(R).aircraftID == aircraftID) {
+                        deleteElementRelation(LR, Info(R).flightID, Info(R).aircraftID);
+                    }
+                    R = Next(R);
+                }
                 deleteElementChild(LC, aircraftID);
+                cout << "Aircraft deleted successfully!" << endl;
                 break;
             }
             case 18: {
@@ -188,7 +230,11 @@ int main() {
 
                 addressParent P = findParent(LP, flightID);
                 if (P != NULL) {
-                    cout << "Flight found: " << Info(P).flightID << endl;
+                    cout << "Flight ID: " << Info(P).flightID << endl;
+                    cout << "Route: " << Info(P).flightRoute << endl;
+                    cout << "Time: " << Info(P).flightTime << endl;
+                    cout << "Available Seats: " << Info(P).availableSeats << endl;
+                    cout << "------------------------" << endl;
                 } else {
                     cout << "Flight not found!" << endl;
                 }
@@ -201,7 +247,11 @@ int main() {
 
                 addressChild C = findChild(LC, aircraftID);
                 if (C != NULL) {
-                    cout << "Aircraft found: " << Info(C).aircraftID << endl;
+                    cout << "Aircraft ID: " << Info(C).aircraftID << endl;
+                    cout << "Model: " << Info(C).aircraftModel << endl;
+                    cout << "Total Seats: " << Info(C).totalSeats << endl;
+                    cout << "Max Weight (kg): " << Info(C).maxWeight << endl;
+                    cout << "------------------------" << endl;
                 } else {
                     cout << "Aircraft not found!" << endl;
                 }

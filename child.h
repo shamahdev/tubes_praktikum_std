@@ -4,7 +4,7 @@
 #include <string>
 
 #define First(L) ((L).first)
-#define Next(P) ((P)->next)
+#define Next(P) ((P)->Next)
 #define Info(P) ((P)->info)
 
 using namespace std;
@@ -21,7 +21,7 @@ typedef struct elmListChild *addressChild;
 
 struct elmListChild {
     infotypeChild info;
-    addressChild next;
+    addressChild Next;
 };
 
 struct ListChild {

@@ -12,6 +12,10 @@ addressRelation createElementRelation(infotypeRelation dataBaru) {
     return P;
 }
 
+addressRelation firstRelation(ListRelation L) {
+    return L.first;
+}
+
 void insertRelation(ListRelation &L, addressRelation P) {
     if (First(L) == NULL) {
         First(L) = P;
@@ -216,7 +220,7 @@ void deleteElementRelation(ListRelation &LR, string flightID, string aircraftID)
         if (Info(R).flightID == flightID && Info(R).aircraftID == aircraftID) {
             if (R == First(LR)) {
                 deleteFirstRelation(LR, R);
-            } else if (next(R) == nullptr) {
+            } else if (Next(R) == nullptr) {
                 deleteLastRelation(LR, R);
             } else {
                 deleteAfterRelation(LR, prev, R);
@@ -225,7 +229,7 @@ void deleteElementRelation(ListRelation &LR, string flightID, string aircraftID)
             return;
         }
         prev = R;
-        R = next(R);
+        R = Next(R);
     }
     cout << "Relation not found!" << endl;
 }

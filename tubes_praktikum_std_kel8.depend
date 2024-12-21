@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1734780592 source:d:\codes\college\modul\tubes_praktikum_std\parent.cpp
+	"parent.h"
+	<iostream>
+
+1734363362 d:\codes\college\modul\tubes_praktikum_std\parent.h
+	<string>
+
+1734780593 source:d:\codes\college\modul\tubes_praktikum_std\child.cpp
+	"child.h"
+	<iostream>
+
+1734363362 d:\codes\college\modul\tubes_praktikum_std\child.h
+	<string>
+
+1734780833 source:d:\codes\college\modul\tubes_praktikum_std\relation.cpp
+	"relation.h"
+	<iostream>
+
+1734780861 d:\codes\college\modul\tubes_praktikum_std\relation.h
+	<string>
+	"parent.h"
+	"child.h"
+
+1734780122 source:d:\codes\college\modul\tubes_praktikum_std\main.cpp
+	<iostream>
+	"relation.h"
+

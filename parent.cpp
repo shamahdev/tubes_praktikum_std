@@ -102,7 +102,7 @@ void deleteElementParent(ListParent &LP, string flightID) {
         if (Info(P).flightID == flightID) {
             if (P == First(LP)) {
                 deleteFirstParent(LP, P);
-            } else if (next(P) == nullptr) {
+            } else if (Next(P) == nullptr) {
                 deleteLastParent(LP, P);
             } else {
                 deleteAfterParent(LP, prev, P);
@@ -111,7 +111,7 @@ void deleteElementParent(ListParent &LP, string flightID) {
             return;
         }
         prev = P;
-        P = next(P);
+        P = Next(P);
     }
     cout << "Flight not found!" << endl;
 }

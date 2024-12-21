@@ -6,7 +6,7 @@
 #define First(L) ((L).first)
 #define Last(L) ((L).last)
 #define Info(P) ((P)->info)
-#define Next(P) ((P)->next)
+#define Next(P) ((P)->Next)
 #define Prev(P) ((P)->prev)
 
 using namespace std;
@@ -23,7 +23,7 @@ typedef struct elmListParent *addressParent;
 
 struct elmListParent {
     infotypeParent info;
-    addressParent next;
+    addressParent Next;
     addressParent prev;
 };
 

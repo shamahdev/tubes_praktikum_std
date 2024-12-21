@@ -83,7 +83,7 @@ void showAllChildren(ListChild L) {
         cout << "Aircraft ID: " << Info(P).aircraftID << endl;
         cout << "Model: " << Info(P).aircraftModel << endl;
         cout << "Total Seats: " << Info(P).totalSeats << endl;
-        cout << "Max Weight: " << Info(P).maxWeight << endl;
+        cout << "Max Weight (kg): " << Info(P).maxWeight << endl;
         cout << "------------------------" << endl;
         P = Next(P);
     }
@@ -97,7 +97,7 @@ void deleteElementChild(ListChild &LC, string aircraftID) {
         if (Info(C).aircraftID == aircraftID) {
             if (C == First(LC)) {
                 deleteFirstChild(LC, C);
-            } else if (next(C) == nullptr) {
+            } else if (Next(C) == nullptr) {
                 deleteLastChild(LC, C);
             } else {
                 deleteAfterChild(LC, prev, C);
@@ -106,7 +106,7 @@ void deleteElementChild(ListChild &LC, string aircraftID) {
             return;
         }
         prev = C;
-        C = next(C);
+        C = Next(C);
     }
     cout << "Aircraft not found!" << endl;
 }
